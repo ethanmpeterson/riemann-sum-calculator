@@ -4,6 +4,7 @@ import controlP5.*;
 ControlP5 gui; // create gui library object
 CheckBox checkbox;
 Button submit; // button that will start the graphing when pressed
+Button startSum; // button to start Reiman sum and visualization of it
 String checkBoxTitles[] = {"Left Endpoint", "Midpoint", "Right Endpoint", "Trapezoidal Sum"};
 
 Textfield functionInput;
@@ -63,35 +64,12 @@ void setupWindow() { // lays out the UI of the calculator
      .setValue(0)
      .setPosition(10,620)
      .setSize(150, 75);
+  
 }
 
 void controlEvent(ControlEvent theEvent) { // Handle GUI Events
   if (theEvent.isFrom(submit)) { // check if button was pressed
-  //println(viewingWindow.getText());
-  //println(viewingWindow.getTextList());
-  int boxesChecked = 0;
-    for (int i = 0; i < 4; i++) {
-      if (checkbox.getState(i)) {
-        boxesChecked++;
-      }
-    }
-    if (!validateFields() || boxesChecked != 1) {
-      fill(255);
-      textSize(12);
-      text("Please Check One Box and complete all fields", 10, 610);
-    } else {
-      /* go forward with graphing here*/
-      println("success start graphing");
-      //disableGUI();
-      gui.setAutoDraw(false);
-      graph = new Graph(780, 800, xInterval.lower, xInterval.upper, yInterval.lower, yInterval.upper, functionExpression);
-      graph.drawXAxis();
-      graph.drawYAxis();
-      graph.drawOrigin();
-      graph.drawF();
-      graph.returnOrigin();
-      gui.setAutoDraw(true);
-    }
+    handleSubmit();
   }
 }
 
@@ -132,7 +110,37 @@ boolean validateFields() { // returns true if valid input is recieved in all the
   } else {
     return false;
   }
-  
-  
   return true;
+}
+
+void handleSubmit() {
+  int boxesChecked = 0;
+  for (int i = 0; i < checkBoxTitles.length; i++) {
+    if (checkbox.getState(i)) {
+      boxesChecked++;
+    }
+  }
+  if (!validateFields() || boxesChecked != 1) {
+    fill(255);
+    textSize(12);
+    text("Please Check One Box and complete all fields", 10, 610);
+  } else {
+    /* go forward with graphing here*/
+    
+    println("success start graphing");
+    gui.setAutoDraw(false);
+    graph = new Graph(780, 800, xInterval.lower, xInterval.upper, yInterval.lower, yInterval.upper, functionExpression);
+    graph.drawXAxis();
+    graph.drawYAxis();
+    graph.drawOrigin();
+    graph.drawF();
+    graph.returnOrigin();
+    gui.setAutoDraw(true);
+  }
+}
+
+void keyTyped() {
+  if (key == ' ' && graph != null) {
+    graph.clearView();
+  }
 }

@@ -96,4 +96,7 @@ class Graph extends ViewWindow {
     popMatrix();
   }
   
+  void clearView() {
+    super.clearWindow();
+  }
 }

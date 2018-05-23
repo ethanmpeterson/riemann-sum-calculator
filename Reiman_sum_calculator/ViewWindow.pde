@@ -20,4 +20,13 @@ class ViewWindow {
   float mapY(float y) {
     return Cy - Cy * (y - Ys)/(Ye - Ys);
   }
+  
+  void clearWindow() { // only called when origin is in original position
+    fill(255); // set color to white
+    noStroke();
+    rect(0, 0, width, height);
+    stroke(0);
+    fill(120);
+    rect(0, 0, 220, 800);
+  }
 }
