@@ -4,7 +4,7 @@ import controlP5.*;
 ControlP5 gui; // create gui library object
 CheckBox checkbox;
 Button submit; // button that will start the graphing when pressed
-//Button startSum; // button to start Reiman sum and visualization of it
+//Button startSum; // button to start reimann sum and visualization of it
 String checkBoxTitles[] = {"Left Endpoint", "Midpoint", "Right Endpoint", "Trapezoidal Sum"};
 
 Textfield functionInput;
@@ -21,13 +21,13 @@ Expression functionExpression;
 
 Interval xInterval;
 Interval yInterval;
-Interval reimanBounds;
+Interval reimannnBounds;
 
 // Create Graph Object
 Graph graph;
 
 // Other variables
-int n; // number of sub intervals for Reiman Sum
+int n; // number of sub intervals for reimann Sum
 
 void setup() {
   size(1000, 800); // set window size to 1000px width 800px height
@@ -94,10 +94,10 @@ boolean validateFields() { // returns true if valid input is recieved in all the
   xInterval = new Interval(xViewingWindow);
   yInterval = new Interval(yViewingWindow);
   
-  // parse Reiman interval 
-  reimanBounds = new Interval(functionInterval);
+  // parse reimann interval 
+  reimannnBounds = new Interval(functionInterval);
   
-  if (!xInterval.parse() || !yInterval.parse() || !reimanBounds.parse()) {
+  if (!xInterval.parse() || !yInterval.parse() || !reimannnBounds.parse()) {
     return false;
   }
   
@@ -153,6 +153,7 @@ void keyTyped() {
     graph.clearView();
     clearFields();
   } else if ((key == 'r' || key == 'R') && graph != null) {
-    /* Start Reiman Sum Calculations and Visualization Here */
+    /* Start reimann Sum Calculations and Visualization Here */
+    
   }
 }
