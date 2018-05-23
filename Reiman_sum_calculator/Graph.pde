@@ -8,6 +8,16 @@ class Graph extends ViewWindow {
     translate(220, 0);
   }
   
+  Graph(ViewWindow inputWindow, Expression function) {
+    super((int) inputWindow.Cx, (int) inputWindow.Cy, inputWindow.Xs, inputWindow.Xe, inputWindow.Ys, inputWindow.Ye);
+    f = function;
+  }
+  
+  Graph(int cx, int cy, Interval x, Interval y, Expression function) {
+    super(cx, cy, x, y);
+    f = function;
+  }
+  
   void drawXAxis() {
     float interval = 0;
     if (super.Xe - super.Xs > 20) {

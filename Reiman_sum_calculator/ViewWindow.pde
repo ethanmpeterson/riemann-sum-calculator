@@ -13,6 +13,16 @@ class ViewWindow {
     dx = (Xe - Xs) / (10 * Cx);
   }
   
+  ViewWindow(int cx, int cy, Interval xRange, Interval yRange) {
+    Cx = cx;
+    Cy = cy;
+    Xs = xRange.lower;
+    Xe = xRange.upper;
+    Ys = yRange.lower;
+    Ye = yRange.upper;
+    dx = (Xe - Xs) / (10 * Cx);
+  }
+  
   float mapX(float x) { // maps x value to a scaled value to work on the viewing window the user sets
     return Cx * (x - Xs)/(Xe - Xs);
   }
