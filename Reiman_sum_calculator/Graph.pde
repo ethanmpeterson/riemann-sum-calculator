@@ -4,6 +4,7 @@ class Graph extends ViewWindow {
     super(cx, cy, xs, xe, ys, ye);
     f = function;
     // translate to new origin for graphing
+    pushMatrix();
     translate(220, 0);
   }
   
@@ -82,13 +83,17 @@ class Graph extends ViewWindow {
     popMatrix();
   }
   
-  void graphF() {
+  void drawF() {
     for (float x = super.Xs; x < super.Xe; x += super.dx) {
       pushMatrix();
       translate(mapX(x), mapY(f.eval(x).answer().toFloat()));
       rect(0,0,1,1);
       popMatrix();
     }
+  }
+  
+  void returnOrigin() { // returns the origin to its original spot in the top left after everything has been drawn
+    popMatrix();
   }
   
 }

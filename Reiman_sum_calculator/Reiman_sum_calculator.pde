@@ -16,6 +16,15 @@ Textfield subIntervals;
 
 Expression functionExpression;
 
+// Interval objects
+
+Interval xInterval;
+Interval yInterval;
+Interval reimanBounds;
+
+// Create Graph Object
+Graph graph;
+
 // Other variables
 int n; // number of sub intervals for Reiman Sum
 
@@ -39,18 +48,20 @@ void setupWindow() { // lays out the UI of the calculator
   yViewingWindow = gui.addTextfield("Y Viewing Window").setPosition(10, 160).setSize(150, 50).setAutoClear(false);
   functionInterval = gui.addTextfield("Function Interval").setPosition(10, 240).setSize(150, 50).setAutoClear(false);
   subIntervals = gui.addTextfield("Number of Sub-intervals").setPosition(10, 320).setSize(50, 50).setAutoClear(false);
-  for (int i = 0; i < checkBoxTitles.length; i++) { // loop to create all the checkboxes
-    checkbox = gui.addCheckBox(Integer.toString(i))
-                  .setPosition(10, 400 + (50 * i))
-                  .setSize(40, 40)
-                  .setItemsPerRow(1)
-                  .setSpacingColumn(30)
-                  .setSpacingRow(20)
-                  .addItem(checkBoxTitles[i], 0); // create each one with a corresponding title left right etc.
-  }
+  
+  checkbox = gui.addCheckBox("Sum Options")
+                .setPosition(10, 400)
+                .setSize(40, 40)
+                .setItemsPerRow(1)
+                .setSpacingColumn(30)
+                .setSpacingRow(10)
+                .addItem(checkBoxTitles[0], 0)
+                .addItem(checkBoxTitles[1], 0)
+                .addItem(checkBoxTitles[2], 0)
+                .addItem(checkBoxTitles[3], 0);
   submit = gui.addButton("Start Graphing") // create submit button to start graphing the function
      .setValue(0)
-     .setPosition(10,600)
+     .setPosition(10,620)
      .setSize(150, 75);
 }
 
@@ -59,7 +70,7 @@ void controlEvent(ControlEvent theEvent) { // Handle GUI Events
   //println(viewingWindow.getText());
   //println(viewingWindow.getTextList());
   int boxesChecked = 0;
-    for (int i = 0; i < checkBoxTitles.length; i++) {
+    for (int i = 0; i < 4; i++) {
       if (checkbox.getState(i)) {
         boxesChecked++;
       }
@@ -67,10 +78,19 @@ void controlEvent(ControlEvent theEvent) { // Handle GUI Events
     if (!validateFields() || boxesChecked != 1) {
       fill(255);
       textSize(12);
-      text("Please Check One Box and complete all fields", 10, 590);
+      text("Please Check One Box and complete all fields", 10, 610);
     } else {
       /* go forward with graphing here*/
       println("success start graphing");
+      //disableGUI();
+      gui.setAutoDraw(false);
+      graph = new Graph(780, 800, xInterval.lower, xInterval.upper, yInterval.lower, yInterval.upper, functionExpression);
+      graph.drawXAxis();
+      graph.drawYAxis();
+      graph.drawOrigin();
+      graph.drawF();
+      graph.returnOrigin();
+      gui.setAutoDraw(true);
     }
   }
 }
@@ -93,10 +113,13 @@ boolean validateFields() { // returns true if valid input is recieved in all the
   }
   
   // parse viewing window input (looking for square brackets closed interval notation)
-  Interval xInterval = new Interval(xViewingWindow);
-  Interval yInterval = new Interval(yViewingWindow);
+  xInterval = new Interval(xViewingWindow);
+  yInterval = new Interval(yViewingWindow);
   
-  if (!xInterval.parse() || !yInterval.parse()) {
+  // parse Reiman interval 
+  reimanBounds = new Interval(functionInterval);
+  
+  if (!xInterval.parse() || !yInterval.parse() || !reimanBounds.parse()) {
     return false;
   }
   
@@ -109,6 +132,7 @@ boolean validateFields() { // returns true if valid input is recieved in all the
   } else {
     return false;
   }
+  
   
   return true;
 }
