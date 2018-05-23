@@ -139,8 +139,18 @@ void handleSubmit() {
   }
 }
 
+void clearFields() {
+  checkbox.deactivateAll();
+  functionInput.clear();
+  xViewingWindow.clear();
+  yViewingWindow.clear();
+  functionInterval.clear();
+  subIntervals.clear();
+}
+
 void keyTyped() {
   if (key == ' ' && graph != null) {
     graph.clearView();
+    clearFields();
   }
 }
