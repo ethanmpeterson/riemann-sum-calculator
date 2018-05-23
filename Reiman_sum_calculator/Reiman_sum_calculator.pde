@@ -4,7 +4,7 @@ import controlP5.*;
 ControlP5 gui; // create gui library object
 CheckBox checkbox;
 Button submit; // button that will start the graphing when pressed
-Button startSum; // button to start Reiman sum and visualization of it
+//Button startSum; // button to start Reiman sum and visualization of it
 String checkBoxTitles[] = {"Left Endpoint", "Midpoint", "Right Endpoint", "Trapezoidal Sum"};
 
 Textfield functionInput;
@@ -152,5 +152,7 @@ void keyTyped() {
   if (key == ' ' && graph != null) {
     graph.clearView();
     clearFields();
+  } else if ((key == 'r' || key == 'R') && graph != null) {
+    /* Start Reiman Sum Calculations and Visualization Here */
   }
 }
