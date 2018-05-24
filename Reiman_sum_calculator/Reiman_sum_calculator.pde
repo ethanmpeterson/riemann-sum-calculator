@@ -162,9 +162,9 @@ void keyTyped() {
     graphOn = false;
   } else if ((key == 'r' || key == 'R') && graph != null && graphOn) {
     /* Start reimann Sum Calculations and Visualization Here */
-    println("LEFT ENDPOINT: " + area.leftEndPoint());
-    println("MIDPOINT: " + area.midPoint());
-    println("RIGHT ENDPOINT: " + area.rightEndPoint());
-    println("TRAPEZOIDAL: " + area.trapezoidal());
+    //println("LEFT ENDPOINT: " + area.leftEndPoint());
+    //println("MIDPOINT: " + area.midPoint());
+    //println("RIGHT ENDPOINT: " + area.rightEndPoint());
+    //println("TRAPEZOIDAL: " + area.trapezoidal());
   }
 }

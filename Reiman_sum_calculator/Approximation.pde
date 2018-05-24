@@ -15,6 +15,8 @@ class Approximation { // class for calculating and drawing different types of Re
     a = bounds.lower;
     b = bounds.upper;
     dx = (b - a) / n;
+    //pushMatrix();
+    //translate(220, 0);
   }
   
   float leftEndPoint() {
@@ -22,7 +24,13 @@ class Approximation { // class for calculating and drawing different types of Re
     totalArea = 0; // clear variable in the case of an area function being called before
     
     for (float i = a; i < b; i += dx) {
-      totalArea += dx * graph.evaluate(i);
+      float x = i;
+      float y = graph.evaluate(x);
+      totalArea += dx * graph.evaluate(x);
+      
+      // draw the rectangle
+      fill(120, 60);
+      rect(220 + graph.mapX(x), graph.mapY(y), (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
     }
     return totalArea;
   }
@@ -32,7 +40,14 @@ class Approximation { // class for calculating and drawing different types of Re
     totalArea = 0;
     
     for (float i = a; i < b; i += dx) {
-      totalArea += dx * graph.evaluate(i + (dx / 2));
+      float x = i + (dx / 2);
+      float y = graph.evaluate(x);
+      totalArea += dx * y;
+      
+      fill(120, 60);
+      float rectWidth = -graph.mapX(x) + graph.mapX(x + dx);
+      rect(220 + graph.mapX(x) - rectWidth / 2, graph.mapY(y), (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
+      
     }
     return totalArea;
   }
@@ -42,7 +57,13 @@ class Approximation { // class for calculating and drawing different types of Re
     totalArea = 0;
     
     for (float i = a; i < b; i += dx) {
-      totalArea += dx * graph.evaluate(i + dx);
+      float x = i + dx;
+      float y = graph.evaluate(x);
+      totalArea += dx * y;
+      
+      // draw the rectangle
+      fill(120, 60);
+      rect(220 + graph.mapX(x), graph.mapY(y), -(-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
     }
     return totalArea;
   }
@@ -57,6 +78,7 @@ class Approximation { // class for calculating and drawing different types of Re
       } else {
         totalArea += 2 * graph.evaluate(i);
       }
+      
     }
     return ((b - a) / (2 * n)) * totalArea;
   }
