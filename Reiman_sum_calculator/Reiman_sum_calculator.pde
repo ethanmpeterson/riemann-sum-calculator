@@ -196,15 +196,12 @@ void keyTyped() {
     textSize(12);
     if (checkedBox == 0) {
       answer = area.leftEndPoint();
-      text("Left Endpoint: " + answer, 10, 760);
     } else if (checkedBox == 1) {
       answer = area.midPoint();
-      text("Midpoint: " + answer, 10, 760);
     } else if (checkedBox == 2) {
       answer = area.rightEndPoint();
-      text("Right Endpoint: " + answer, 10, 760);
     } else if (checkedBox == 3) {
-      //text("Trapezoidal: " + area.trapezoidal(), 10, 720); // not working yet
+      answer = area.trapezoidal(); // not working yet
     }
     checkedBox = 0;
   }
