@@ -34,6 +34,8 @@ int n; // number of sub intervals for reimann Sum
 boolean graphOn; // true if graph is currently onscreen
 int checkedBox;
 
+float answer;
+
 void setup() {
   size(1000, 800); // set window size to 1000px width 800px height
   background(255); //background color will be white and then layered on top of
@@ -43,6 +45,13 @@ void setup() {
 }
 
 void draw() {
+  //gui.setAutoDraw(false);
+  fill(255);
+  textSize(12);
+  text("Press R to perform an approximation", 5, 720);
+  text("Approx Area = " + answer, 10, 760);
+  text("Press SPACE to start over", 5, 790);
+  //gui.setAutoDraw(true);
 }
 
 void setupWindow() { // lays out the UI of the calculator
@@ -186,13 +195,16 @@ void keyTyped() {
     fill(255);
     textSize(12);
     if (checkedBox == 0) {
-     text("Left Endpoint: " + area.leftEndPoint(), 10, 760);
+      answer = area.leftEndPoint();
+      text("Left Endpoint: " + answer, 10, 760);
     } else if (checkedBox == 1) {
-     text("Midpoint: " + area.midPoint(), 10, 720);
+      answer = area.midPoint();
+      text("Midpoint: " + answer, 10, 760);
     } else if (checkedBox == 2) {
-     text("Right Endpoint: " + area.rightEndPoint(), 10, 760);
+      answer = area.rightEndPoint();
+      text("Right Endpoint: " + answer, 10, 760);
     } else if (checkedBox == 3) {
-          //text("Trapezoidal: " + area.trapezoidal(), 10, 720); // not working yet
+      //text("Trapezoidal: " + area.trapezoidal(), 10, 720); // not working yet
     }
     checkedBox = 0;
   }
