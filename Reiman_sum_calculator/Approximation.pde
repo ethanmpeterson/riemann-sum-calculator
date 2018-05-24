@@ -73,12 +73,21 @@ class Approximation { // class for calculating and drawing different types of Re
     totalArea = 0;
     
     for (float i = a; i < b; i += dx) {
+      float x = i;
+      float y = graph.evaluate(i);
       if (i == a || i == b) {
         totalArea += graph.evaluate(i);
       } else {
         totalArea += 2 * graph.evaluate(i);
       }
-      
+      fill(120, 60);
+      // form trapezoid shape
+      beginShape();
+      vertex(220 + graph.mapX(x), graph.mapY(y)); // left point on the graph
+      vertex(220 + graph.mapX(x), graph.mapY(0) - graph.mapY(y)); // left point on x-axis
+      vertex(220 + graph.mapX(x) + (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(graph.evaluate(x + dx))); // right point on graph
+      vertex(220 + graph.mapX(x) + (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
+      endShape(CLOSE);
     }
     return ((b - a) / (2 * n)) * totalArea;
   }

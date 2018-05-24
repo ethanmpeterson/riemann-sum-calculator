@@ -161,10 +161,23 @@ void keyTyped() {
     clearFields();
     graphOn = false;
   } else if ((key == 'r' || key == 'R') && graph != null && graphOn) {
+    //graph.returnOrigin();
+    gui.setAutoDraw(true);
     /* Start reimann Sum Calculations and Visualization Here */
-    //println("LEFT ENDPOINT: " + area.leftEndPoint());
-    //println("MIDPOINT: " + area.midPoint());
-    //println("RIGHT ENDPOINT: " + area.rightEndPoint());
-    //println("TRAPEZOIDAL: " + area.trapezoidal());
+    // find checked box and run corresponding Reimann Sum (All working with exception of trapezoid)
+    for (int i = 0; i < checkBoxTitles.length; i++) {
+      if (checkbox.getState(i)) {
+        fill(255);
+        if (i == 0) {
+          text("Left Endpoint: " + area.leftEndPoint(), 10, 720);
+        } else if (i == 1) {
+          text("Midpoint: " + area.midPoint(), 10, 720);
+        } else if (i == 2) {
+          text("Right Endpoint: " + area.rightEndPoint(), 10, 720);
+        } else if (i == 3) {
+          //text("Trapezoidal: " + area.trapezoidal(), 10, 720); // not working yet
+        }
+      }
+    }
   }
 }
