@@ -21,13 +21,17 @@ Expression functionExpression;
 
 Interval xInterval;
 Interval yInterval;
-Interval reimannnBounds;
+Interval reimannBounds;
 
 // Create Graph Object
 Graph graph;
 
+// Create Approximation object
+Approximation area;
+
 // Other variables
 int n; // number of sub intervals for reimann Sum
+boolean graphOn; // true if graph is currently onscreen
 
 void setup() {
   size(1000, 800); // set window size to 1000px width 800px height
@@ -95,15 +99,15 @@ boolean validateFields() { // returns true if valid input is recieved in all the
   yInterval = new Interval(yViewingWindow);
   
   // parse reimann interval 
-  reimannnBounds = new Interval(functionInterval);
+  reimannBounds = new Interval(functionInterval);
   
-  if (!xInterval.parse() || !yInterval.parse() || !reimannnBounds.parse()) {
+  if (!xInterval.parse() || !yInterval.parse() || !reimannBounds.parse()) {
     return false;
   }
   
   if (subSize.trim().length() > 0) { // check if the user has entered the number of sub intervals
     try {
-      Integer.parseInt(subSize);
+      n = Integer.parseInt(subSize);
     } catch (NumberFormatException e) {
       return false;
     }
@@ -136,6 +140,9 @@ void handleSubmit() {
     graph.drawF();
     graph.returnOrigin();
     gui.setAutoDraw(true);
+    // set up Approximation object in case user decides to do a Reimann sum
+    area = new Approximation(graph, n, reimannBounds);
+    graphOn = true;
   }
 }
 
@@ -152,8 +159,12 @@ void keyTyped() {
   if (key == ' ' && graph != null) {
     graph.clearView();
     clearFields();
-  } else if ((key == 'r' || key == 'R') && graph != null) {
+    graphOn = false;
+  } else if ((key == 'r' || key == 'R') && graph != null && graphOn) {
     /* Start reimann Sum Calculations and Visualization Here */
-    
+    println("LEFT ENDPOINT: " + area.leftEndPoint());
+    println("MIDPOINT: " + area.midPoint());
+    println("RIGHT ENDPOINT: " + area.rightEndPoint());
+    println("TRAPEZOIDAL: " + area.trapezoidal());
   }
 }

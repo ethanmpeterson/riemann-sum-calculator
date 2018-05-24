@@ -1,5 +1,7 @@
 class Graph extends ViewWindow {
-  private Expression f;
+  
+  Expression f;
+  
   Graph(int cx, int cy, float xs, float xe, float ys, float ye, Expression function) {
     super(cx, cy, xs, xe, ys, ye);
     f = function;
@@ -100,6 +102,10 @@ class Graph extends ViewWindow {
       rect(0,0,1,1);
       popMatrix();
     }
+  }
+  
+  float evaluate(float x) {
+    return f.eval(x).answer().toFloat();
   }
   
   void returnOrigin() { // returns the origin to its original spot in the top left after everything has been drawn
