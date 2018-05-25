@@ -50,7 +50,7 @@ void draw() {
   textSize(12);
   text("Press R to perform an approximation", 5, 720);
   text("Approx Area = " + answer, 10, 760);
-  text("Press SPACE to start over", 5, 790);
+  text("Press C to start over", 5, 790);
   //gui.setAutoDraw(true);
 }
 
@@ -140,7 +140,9 @@ void handleSubmit() {
     text("Please Check One Box and complete all fields", 10, 610);
   } else {
     /* go forward with graphing here*/
-    
+    if (graph != null) {
+      graph.clearView(); // clear it if there is already a graph onscreen
+    }
     println("success start graphing");
     gui.setAutoDraw(false);
     graph = new Graph(780, 800, xInterval.lower, xInterval.upper, yInterval.lower, yInterval.upper, functionExpression);
@@ -166,7 +168,7 @@ void clearFields() {
 }
 
 void keyTyped() {
-  if (key == ' ' && graph != null) {
+  if ((key == 'c' || key == 'C') && graph != null) {
     graph.clearView();
     clearFields();
     graphOn = false;
@@ -201,7 +203,7 @@ void keyTyped() {
     } else if (checkedBox == 2) {
       answer = area.rightEndPoint();
     } else if (checkedBox == 3) {
-      answer = area.trapezoidal(); // not working yet
+      answer = area.trapezoidal();
     }
     checkedBox = 0;
   }

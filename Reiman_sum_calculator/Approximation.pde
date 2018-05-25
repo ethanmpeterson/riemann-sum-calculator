@@ -47,7 +47,6 @@ class Approximation { // class for calculating and drawing different types of Re
       fill(120, 60);
       float rectWidth = -graph.mapX(x) + graph.mapX(x + dx);
       rect(220 + graph.mapX(x) - rectWidth / 2, graph.mapY(y), (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
-      
     }
     return totalArea;
   }
@@ -72,7 +71,7 @@ class Approximation { // class for calculating and drawing different types of Re
     
     totalArea = 0;
     
-    for (float i = a; i < b; i += dx) {
+    for (float i = a; i < b - dx; i += dx) {
       float x = i;
       float y = graph.evaluate(i);
       if (i == a || i == b) {
