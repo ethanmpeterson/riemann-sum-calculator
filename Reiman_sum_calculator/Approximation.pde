@@ -26,7 +26,7 @@ class Approximation { // class for calculating and drawing different types of Re
     for (float i = a; i < b; i += dx) {
       float x = i;
       float y = graph.evaluate(x);
-      totalArea += dx * graph.evaluate(x);
+      totalArea += dx * y;
       
       // draw the rectangle
       fill(120, 60);
@@ -67,28 +67,39 @@ class Approximation { // class for calculating and drawing different types of Re
     return totalArea;
   }
   
-  float trapezoidal() {
+  double trapezoidal() {
     
     totalArea = 0;
     
-    for (float i = a; i < b - dx; i += dx) {
+    for (float i = a; i <= b; i += dx) {
       float x = i;
+      //println(x);
       float y = graph.evaluate(i);
+      
       if (i == a || i == b) {
-        totalArea += graph.evaluate(i);
+        totalArea += y;
+        println(y);
       } else {
-        totalArea += 2 * graph.evaluate(i);
+        totalArea += 2 * y;
+        println(y * 2);
       }
+      //if (i == b - dx) {
+      //  totalArea += graph.evaluate(i + dx);
+      //}
+      
       fill(120, 60);
       // form trapezoid shape
-      beginShape();
-      vertex(220 + graph.mapX(x), graph.mapY(y)); // left point on the graph
-      vertex(220 + graph.mapX(x), graph.mapY(0)); // left on x-axis
-      vertex(220 + graph.mapX(x + dx), graph.mapY(0)); // right on x-axis
-      vertex(220 + graph.mapX(x + dx), graph.mapY(graph.evaluate(x + dx)));
-      endShape(CLOSE);
+      if (i != b) {
+        beginShape();
+        vertex(220 + graph.mapX(x), graph.mapY(y)); // left point on the graph
+        vertex(220 + graph.mapX(x), graph.mapY(0)); // left on x-axis
+        vertex(220 + graph.mapX(x + dx), graph.mapY(0)); // right on x-axis
+        vertex(220 + graph.mapX(x + dx), graph.mapY(graph.evaluate(x + dx)));
+        endShape(CLOSE);
+      }
     }
-    return ((b - a) / (2 * n)) * totalArea;
+    //totalArea += graph.evaluate(b);
+    return (dx / 2) * totalArea;
   }
   
 }

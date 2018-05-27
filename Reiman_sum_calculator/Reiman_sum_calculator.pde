@@ -34,7 +34,7 @@ int n; // number of sub intervals for reimann Sum
 boolean graphOn; // true if graph is currently onscreen
 int checkedBox;
 
-float answer;
+double answer;
 
 void setup() {
   size(1000, 800); // set window size to 1000px width 800px height
@@ -49,7 +49,7 @@ void draw() {
   fill(255);
   textSize(12);
   text("Press R to perform an approximation", 5, 720);
-  text("Approx Area = " + answer, 10, 760);
+  text("A = " + answer, 10, 760);
   text("Press C to start over", 5, 790);
   //gui.setAutoDraw(true);
 }
