@@ -19,6 +19,10 @@ class Approximation { // class for calculating and drawing different types of Re
     //translate(220, 0);
   }
   
+  private boolean approxEqual(float a, float b) {
+    return abs(a - b) <= 0.0001;
+  }
+  
   float leftEndPoint() {
     
     totalArea = 0; // clear variable in the case of an area function being called before
@@ -76,7 +80,7 @@ class Approximation { // class for calculating and drawing different types of Re
       //println(x);
       float y = graph.evaluate(i);
       
-      if (i == a || i == b) {
+      if (approxEqual(i, a) || approxEqual(i, b)) {
         totalArea += y;
         println(y);
       } else {
