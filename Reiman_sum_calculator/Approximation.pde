@@ -93,7 +93,7 @@ class Approximation { // class for calculating and drawing different types of Re
       
       fill(120, 60);
       // form trapezoid shape
-      if (i != b) {
+      if (!approxEqual(i, b)) {
         beginShape();
         vertex(220 + graph.mapX(x), graph.mapY(y)); // left point on the graph
         vertex(220 + graph.mapX(x), graph.mapY(0)); // left on x-axis
