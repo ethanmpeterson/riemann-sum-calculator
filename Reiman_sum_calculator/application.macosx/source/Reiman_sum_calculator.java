@@ -53,6 +53,8 @@ int n; // number of sub intervals for reimann Sum
 boolean graphOn; // true if graph is currently onscreen
 int checkedBox;
 
+double answer;
+
 public void setup() {
    // set window size to 1000px width 800px height
   background(255); //background color will be white and then layered on top of
@@ -62,6 +64,13 @@ public void setup() {
 }
 
 public void draw() {
+  //gui.setAutoDraw(false);
+  fill(255);
+  textSize(12);
+  text("Press R to perform an approximation", 5, 720);
+  text("A = " + answer, 10, 760);
+  text("Press C to start over", 5, 790);
+  //gui.setAutoDraw(true);
 }
 
 public void setupWindow() { // lays out the UI of the calculator
@@ -150,7 +159,9 @@ public void handleSubmit() {
     text("Please Check One Box and complete all fields", 10, 610);
   } else {
     /* go forward with graphing here*/
-    
+    if (graph != null) {
+      graph.clearView(); // clear it if there is already a graph onscreen
+    }
     println("success start graphing");
     gui.setAutoDraw(false);
     graph = new Graph(780, 800, xInterval.lower, xInterval.upper, yInterval.lower, yInterval.upper, functionExpression);
@@ -176,14 +187,24 @@ public void clearFields() {
 }
 
 public void keyTyped() {
-  if (key == ' ' && graph != null) {
+  if ((key == 'c' || key == 'C') && graph != null) {
     graph.clearView();
     clearFields();
     graphOn = false;
   } else if ((key == 'r' || key == 'R') && graph != null && graphOn) {
-    //graph.returnOrigin();
-    gui.setAutoDraw(true);
     /* Start reimann Sum Calculations and Visualization Here */
+    // redraw graph
+    gui.setAutoDraw(false);
+    graph.clearView();
+    pushMatrix();
+    translate(220, 0);
+    graph.drawXAxis();
+    graph.drawYAxis();
+    graph.drawOrigin();
+    graph.drawF();
+    popMatrix();
+    gui.setAutoDraw(true);
+    
     // find checked box and run corresponding Reimann Sum (All working with exception of trapezoid)
 
     for (int i = 0; i < checkBoxTitles.length; i++) {
@@ -195,15 +216,15 @@ public void keyTyped() {
     fill(255);
     textSize(12);
     if (checkedBox == 0) {
-     text("Left Endpoint: " + area.leftEndPoint(), 10, 760);
-        } else if (checkedBox == 1) {
-          text("Midpoint: " + area.midPoint(), 10, 720);
-        } else if (checkedBox == 2) {
-          text("Right Endpoint: " + area.rightEndPoint(), 10, 760);
-        } else if (checkedBox == 3) {
-          //text("Trapezoidal: " + area.trapezoidal(), 10, 720); // not working yet
-        }
-        checkedBox = 0;
+      answer = area.leftEndPoint();
+    } else if (checkedBox == 1) {
+      answer = area.midPoint();
+    } else if (checkedBox == 2) {
+      answer = area.rightEndPoint();
+    } else if (checkedBox == 3) {
+      answer = area.trapezoidal();
+    }
+    checkedBox = 0;
   }
 }
 class Approximation { // class for calculating and drawing different types of Reimann Sums
@@ -227,6 +248,10 @@ class Approximation { // class for calculating and drawing different types of Re
     //translate(220, 0);
   }
   
+  private boolean approxEqual(float a, float b) {
+    return abs(a - b) <= 0.0001f;
+  }
+  
   public float leftEndPoint() {
     
     totalArea = 0; // clear variable in the case of an area function being called before
@@ -234,7 +259,7 @@ class Approximation { // class for calculating and drawing different types of Re
     for (float i = a; i < b; i += dx) {
       float x = i;
       float y = graph.evaluate(x);
-      totalArea += dx * graph.evaluate(x);
+      totalArea += dx * y;
       
       // draw the rectangle
       fill(120, 60);
@@ -255,7 +280,6 @@ class Approximation { // class for calculating and drawing different types of Re
       fill(120, 60);
       float rectWidth = -graph.mapX(x) + graph.mapX(x + dx);
       rect(220 + graph.mapX(x) - rectWidth / 2, graph.mapY(y), (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
-      
     }
     return totalArea;
   }
@@ -276,28 +300,39 @@ class Approximation { // class for calculating and drawing different types of Re
     return totalArea;
   }
   
-  public float trapezoidal() {
+  public double trapezoidal() {
     
     totalArea = 0;
     
-    for (float i = a; i < b; i += dx) {
+    for (float i = a; i <= b; i += dx) {
       float x = i;
+      //println(x);
       float y = graph.evaluate(i);
-      if (i == a || i == b) {
-        totalArea += graph.evaluate(i);
+      
+      if (approxEqual(i, a) || approxEqual(i, b)) {
+        totalArea += y;
+        println(y);
       } else {
-        totalArea += 2 * graph.evaluate(i);
+        totalArea += 2 * y;
+        println(y * 2);
       }
+      //if (i == b - dx) {
+      //  totalArea += graph.evaluate(i + dx);
+      //}
+      
       fill(120, 60);
       // form trapezoid shape
-      beginShape();
-      vertex(220 + graph.mapX(x), graph.mapY(y)); // left point on the graph
-      vertex(220 + graph.mapX(x), graph.mapY(0) - graph.mapY(y)); // left point on x-axis
-      vertex(220 + graph.mapX(x) + (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(graph.evaluate(x + dx))); // right point on graph
-      vertex(220 + graph.mapX(x) + (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
-      endShape(CLOSE);
+      if (!approxEqual(i, b)) {
+        beginShape();
+        vertex(220 + graph.mapX(x), graph.mapY(y)); // left point on the graph
+        vertex(220 + graph.mapX(x), graph.mapY(0)); // left on x-axis
+        vertex(220 + graph.mapX(x + dx), graph.mapY(0)); // right on x-axis
+        vertex(220 + graph.mapX(x + dx), graph.mapY(graph.evaluate(x + dx)));
+        endShape(CLOSE);
+      }
     }
-    return ((b - a) / (2 * n)) * totalArea;
+    //totalArea += graph.evaluate(b);
+    return (dx / 2) * totalArea;
   }
   
 }

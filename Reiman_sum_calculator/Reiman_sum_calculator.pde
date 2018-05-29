@@ -136,7 +136,7 @@ void handleSubmit() {
   }
   if (!validateFields() || boxesChecked != 1) {
     fill(255);
-    textSize(12);
+    textSize(9);
     text("Please Check One Box and complete all fields", 10, 610);
   } else {
     /* go forward with graphing here*/

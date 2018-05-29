@@ -34,6 +34,8 @@ int n; // number of sub intervals for reimann Sum
 boolean graphOn; // true if graph is currently onscreen
 int checkedBox;
 
+double answer;
+
 void setup() {
   size(1000, 800); // set window size to 1000px width 800px height
   background(255); //background color will be white and then layered on top of
@@ -43,6 +45,13 @@ void setup() {
 }
 
 void draw() {
+  //gui.setAutoDraw(false);
+  fill(255);
+  textSize(12);
+  text("Press R to perform an approximation", 5, 720);
+  text("A = " + answer, 10, 760);
+  text("Press C to start over", 5, 790);
+  //gui.setAutoDraw(true);
 }
 
 void setupWindow() { // lays out the UI of the calculator
@@ -131,7 +140,9 @@ void handleSubmit() {
     text("Please Check One Box and complete all fields", 10, 610);
   } else {
     /* go forward with graphing here*/
-    
+    if (graph != null) {
+      graph.clearView(); // clear it if there is already a graph onscreen
+    }
     println("success start graphing");
     gui.setAutoDraw(false);
     graph = new Graph(780, 800, xInterval.lower, xInterval.upper, yInterval.lower, yInterval.upper, functionExpression);
@@ -157,14 +168,24 @@ void clearFields() {
 }
 
 void keyTyped() {
-  if (key == ' ' && graph != null) {
+  if ((key == 'c' || key == 'C') && graph != null) {
     graph.clearView();
     clearFields();
     graphOn = false;
   } else if ((key == 'r' || key == 'R') && graph != null && graphOn) {
-    //graph.returnOrigin();
-    gui.setAutoDraw(true);
     /* Start reimann Sum Calculations and Visualization Here */
+    // redraw graph
+    gui.setAutoDraw(false);
+    graph.clearView();
+    pushMatrix();
+    translate(220, 0);
+    graph.drawXAxis();
+    graph.drawYAxis();
+    graph.drawOrigin();
+    graph.drawF();
+    popMatrix();
+    gui.setAutoDraw(true);
+    
     // find checked box and run corresponding Reimann Sum (All working with exception of trapezoid)
 
     for (int i = 0; i < checkBoxTitles.length; i++) {
@@ -176,14 +197,14 @@ void keyTyped() {
     fill(255);
     textSize(12);
     if (checkedBox == 0) {
-     text("Left Endpoint: " + area.leftEndPoint(), 10, 760);
-        } else if (checkedBox == 1) {
-          text("Midpoint: " + area.midPoint(), 10, 720);
-        } else if (checkedBox == 2) {
-          text("Right Endpoint: " + area.rightEndPoint(), 10, 760);
-        } else if (checkedBox == 3) {
-          //text("Trapezoidal: " + area.trapezoidal(), 10, 720); // not working yet
-        }
-        checkedBox = 0;
+      answer = area.leftEndPoint();
+    } else if (checkedBox == 1) {
+      answer = area.midPoint();
+    } else if (checkedBox == 2) {
+      answer = area.rightEndPoint();
+    } else if (checkedBox == 3) {
+      answer = area.trapezoidal();
+    }
+    checkedBox = 0;
   }
 }
