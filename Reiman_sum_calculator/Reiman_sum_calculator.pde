@@ -172,6 +172,7 @@ void keyTyped() {
     graph.clearView();
     clearFields();
     graphOn = false;
+    answer = 0;
   } else if ((key == 'r' || key == 'R') && graph != null && graphOn) {
     /* Start reimann Sum Calculations and Visualization Here */
     // redraw graph

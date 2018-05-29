@@ -21,8 +21,9 @@ class Interval { // class that parses closed interval text and converts upper an
             } catch (NumberFormatException e) {
               return false;
             }
-            lower = Float.parseFloat(input.substring(1, i)); // needs to be put in try catch to ensure conversion works
-            upper = Float.parseFloat(input.substring(i + 1, input.length() - 1));
+            if (lower >= upper) {
+              return false;
+            }
             println(lower);
             println(upper);
             break;
