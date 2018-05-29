@@ -175,7 +175,6 @@ void keyTyped() {
     answer = 0;
   } else if ((key == 'r' || key == 'R') && graph != null && graphOn) {
     /* Start reimann Sum Calculations and Visualization Here */
-    // redraw graph
     gui.setAutoDraw(false);
     graph.clearView();
     pushMatrix();
