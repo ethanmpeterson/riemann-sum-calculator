@@ -38,8 +38,22 @@ int xOffset = 220;
 
 double answer;
 
+int scaledWidth;
+int scaledHeight;
+
+java.awt.Insets insets;
+
+void getScaledResolution() {
+  
+}
+
 void setup() {
   size(1000, 800); // set window size to 1000px width 800px height
+  
+  frame.pack();     //frame.pack() ... plus insets
+  insets = frame.getInsets();
+  surface.setResizable(true);
+  
   background(255); //background color will be white and then layered on top of
   //smooth();
   gui = new ControlP5(this);
