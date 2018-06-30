@@ -37,6 +37,6 @@ class ViewWindow {
     rect(0, 0, width, height);
     stroke(0);
     fill(120);
-    rect(0, 0, 220, 800);
+    rect(0, 0, xOffset, 800);
   }
 }

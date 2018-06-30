@@ -34,6 +34,8 @@ int n; // number of sub intervals for reimann Sum
 boolean graphOn; // true if graph is currently onscreen
 int checkedBox;
 
+int xOffset = 220;
+
 double answer;
 
 void setup() {
@@ -56,7 +58,7 @@ void draw() {
 
 void setupWindow() { // lays out the UI of the calculator
   fill(120);
-  rect(0, 0, 220, 800);
+  rect(0, 0, xOffset, 800);
   // add Textfields for different input info
   functionInput = gui.addTextfield("Function Input").setPosition(10, 10).setSize(200, 50).setAutoClear(false);
   xViewingWindow = gui.addTextfield("X Viewing Window").setPosition(10, 80).setSize(150, 50).setAutoClear(false);
@@ -178,7 +180,7 @@ void keyTyped() {
     gui.setAutoDraw(false);
     graph.clearView();
     pushMatrix();
-    translate(220, 0);
+    translate(xOffset, 0);
     graph.drawXAxis();
     graph.drawYAxis();
     graph.drawOrigin();

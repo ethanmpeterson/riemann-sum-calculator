@@ -34,7 +34,7 @@ class Approximation { // class for calculating and drawing different types of Re
       
       // draw the rectangle
       fill(120, 60);
-      rect(220 + graph.mapX(x), graph.mapY(y), (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
+      rect(xOffset + graph.mapX(x), graph.mapY(y), (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
     }
     return totalArea;
   }
@@ -50,7 +50,7 @@ class Approximation { // class for calculating and drawing different types of Re
       
       fill(120, 60);
       float rectWidth = -graph.mapX(x) + graph.mapX(x + dx);
-      rect(220 + graph.mapX(x) - rectWidth / 2, graph.mapY(y), (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
+      rect(xOffset + graph.mapX(x) - rectWidth / 2, graph.mapY(y), (-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
     }
     return totalArea;
   }
@@ -66,7 +66,7 @@ class Approximation { // class for calculating and drawing different types of Re
       
       // draw the rectangle
       fill(120, 60);
-      rect(220 + graph.mapX(x), graph.mapY(y), -(-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
+      rect(xOffset + graph.mapX(x), graph.mapY(y), -(-graph.mapX(x) + graph.mapX(x + dx)), graph.mapY(0) - graph.mapY(y));
     }
     return totalArea;
   }
@@ -95,10 +95,10 @@ class Approximation { // class for calculating and drawing different types of Re
       // form trapezoid shape
       if (!approxEqual(i, b)) {
         beginShape();
-        vertex(220 + graph.mapX(x), graph.mapY(y)); // left point on the graph
-        vertex(220 + graph.mapX(x), graph.mapY(0)); // left on x-axis
-        vertex(220 + graph.mapX(x + dx), graph.mapY(0)); // right on x-axis
-        vertex(220 + graph.mapX(x + dx), graph.mapY(graph.evaluate(x + dx)));
+        vertex(xOffset + graph.mapX(x), graph.mapY(y)); // left point on the graph
+        vertex(xOffset + graph.mapX(x), graph.mapY(0)); // left on x-axis
+        vertex(xOffset + graph.mapX(x + dx), graph.mapY(0)); // right on x-axis
+        vertex(xOffset + graph.mapX(x + dx), graph.mapY(graph.evaluate(x + dx)));
         endShape(CLOSE);
       }
     }

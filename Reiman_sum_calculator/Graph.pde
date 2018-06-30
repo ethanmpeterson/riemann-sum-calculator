@@ -7,7 +7,7 @@ class Graph extends ViewWindow {
     f = function;
     // translate to new origin for graphing
     pushMatrix();
-    translate(220, 0);
+    translate(xOffset, 0);
   }
   
   Graph(ViewWindow inputWindow, Expression function) {
