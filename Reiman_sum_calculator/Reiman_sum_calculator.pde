@@ -82,13 +82,12 @@ void setup() {
   
    //background color will be white and then layered on top of
   //smooth();
-  gui = new ControlP5(this);
   //surface.setResizable(true);
   //gui.setAutoDraw(false);
   background(255);
   //setupWindow();
-  //gui.setAutoDraw(true);
   surface.setSize(w, h);
+  gui = new ControlP5(this);
 }
 
 void draw() {
@@ -101,7 +100,7 @@ void draw() {
   text("Press R to perform an approximation", 5, 720 * scaleFactor);
   text("A = " + answer, 10, 760 * scaleFactor);
   text("Press C to start over", 5, 790);
-  println("in loop");
+  //println("in loop");
   //gui.setAutoDraw(true);
 }
 
