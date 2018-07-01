@@ -34,7 +34,7 @@ int n; // number of sub intervals for reimann Sum
 boolean graphOn; // true if graph is currently onscreen
 int checkedBox;
 
-int xOffset = 220;
+float xOffset = 220;
 
 double answer;
 
@@ -68,6 +68,7 @@ void getScaledResolution() {
       }
     }
   }
+  xOffset = xOffset * scaleFactor;
   println(scaleFactor);
 }
 
@@ -107,16 +108,19 @@ void draw() {
 void setupWindow() { // lays out the UI of the calculator
   fill(120);
   rect(0, 0, xOffset, 800);
+  float s = scaleFactor;
+  float x = 10 * s;
+  int y = (int) Math.floor(50 * s);
   // add Textfields for different input info
-  functionInput = gui.addTextfield("Function Input").setPosition(10, 10).setSize(200, 50).setAutoClear(false);
-  xViewingWindow = gui.addTextfield("X Viewing Window").setPosition(10, 80).setSize(150, 50).setAutoClear(false);
-  yViewingWindow = gui.addTextfield("Y Viewing Window").setPosition(10, 160).setSize(150, 50).setAutoClear(false);
-  functionInterval = gui.addTextfield("Function Interval").setPosition(10, 240).setSize(150, 50).setAutoClear(false);
-  subIntervals = gui.addTextfield("Number of Sub-intervals").setPosition(10, 320).setSize(50, 50).setAutoClear(false);
+  functionInput = gui.addTextfield("Function Input").setPosition(x, 10 * s).setSize(200, y).setAutoClear(false);
+  xViewingWindow = gui.addTextfield("X Viewing Window").setPosition(x, 80 * s).setSize(150, y).setAutoClear(false);
+  yViewingWindow = gui.addTextfield("Y Viewing Window").setPosition(x, 160 * s).setSize(150, y).setAutoClear(false);
+  functionInterval = gui.addTextfield("Function Interval").setPosition(x, 240 * s).setSize(150, y).setAutoClear(false);
+  subIntervals = gui.addTextfield("Number of Sub-intervals").setPosition(x, 320 * s).setSize(50, y).setAutoClear(false);
   
   checkbox = gui.addCheckBox("Sum Options")
-                .setPosition(10, 400)
-                .setSize(40, 40)
+                .setPosition(x, 400 * s)
+                .setSize((int) Math.floor(40 * s), (int) Math.floor(40 * s))
                 .setItemsPerRow(1)
                 .setSpacingColumn(30)
                 .setSpacingRow(10)
@@ -126,9 +130,8 @@ void setupWindow() { // lays out the UI of the calculator
                 .addItem(checkBoxTitles[3], 0);
   submit = gui.addButton("Start Graphing") // create submit button to start graphing the function
      .setValue(0)
-     .setPosition(10,620)
-     .setSize(150, 75);
-  
+     .setPosition(x, 620 * s)
+     .setSize((int) Math.floor(150 * s), (int) Math.floor(75 * s));
 }
 
 void controlEvent(ControlEvent theEvent) { // Handle GUI Events
@@ -187,7 +190,7 @@ void handleSubmit() {
   if (!validateFields() || boxesChecked != 1) {
     fill(255);
     textSize(9);
-    text("Please Check One Box and complete all fields", 10, 610);
+    text("Please Check One Box and complete all fields", 10 * scaleFactor, 610 * scaleFactor);
   } else {
     /* go forward with graphing here*/
     if (graph != null) {
@@ -195,7 +198,7 @@ void handleSubmit() {
     }
     println("success start graphing");
     gui.setAutoDraw(false);
-    graph = new Graph(780, 800, xInterval.lower, xInterval.upper, yInterval.lower, yInterval.upper, functionExpression);
+    graph = new Graph((int) Math.floor(780 * scaleFactor), (int) Math.floor(800 * scaleFactor), xInterval.lower, xInterval.upper, yInterval.lower, yInterval.upper, functionExpression);
     graph.drawXAxis();
     graph.drawYAxis();
     graph.drawOrigin();
@@ -245,7 +248,7 @@ void keyTyped() {
       }
     }
     fill(255);
-    textSize(12);
+    textSize(12 * scaleFactor);
     if (checkedBox == 0) {
       answer = area.leftEndPoint();
     } else if (checkedBox == 1) {
