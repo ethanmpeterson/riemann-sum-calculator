@@ -112,11 +112,11 @@ void setupWindow() { // lays out the UI of the calculator
   float x = 10 * s;
   int y = (int) Math.floor(50 * s);
   // add Textfields for different input info
-  functionInput = gui.addTextfield("Function Input").setPosition(x, 10 * s).setSize(200, y).setAutoClear(false);
-  xViewingWindow = gui.addTextfield("X Viewing Window").setPosition(x, 80 * s).setSize(150, y).setAutoClear(false);
-  yViewingWindow = gui.addTextfield("Y Viewing Window").setPosition(x, 160 * s).setSize(150, y).setAutoClear(false);
-  functionInterval = gui.addTextfield("Function Interval").setPosition(x, 240 * s).setSize(150, y).setAutoClear(false);
-  subIntervals = gui.addTextfield("Number of Sub-intervals").setPosition(x, 320 * s).setSize(50, y).setAutoClear(false);
+  functionInput = gui.addTextfield("Function Input").setPosition(x, 10 * s).setSize((int) Math.floor(200 * s), y).setAutoClear(false);
+  xViewingWindow = gui.addTextfield("X Viewing Window").setPosition(x, 80 * s).setSize((int) Math.floor(150 * s), y).setAutoClear(false);
+  yViewingWindow = gui.addTextfield("Y Viewing Window").setPosition(x, 160 * s).setSize((int) Math.floor(150 * s), y).setAutoClear(false);
+  functionInterval = gui.addTextfield("Function Interval").setPosition(x, 240 * s).setSize((int) Math.floor(150 * s), y).setAutoClear(false);
+  subIntervals = gui.addTextfield("Number of Sub-intervals").setPosition(x, 320 * s).setSize((int)Math.floor(50 * s), y).setAutoClear(false);
   
   checkbox = gui.addCheckBox("Sum Options")
                 .setPosition(x, 400 * s)
