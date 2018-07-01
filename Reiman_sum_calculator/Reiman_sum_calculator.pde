@@ -41,32 +41,67 @@ double answer;
 int scaledWidth;
 int scaledHeight;
 
+float originalWidth = 1000;
+float originalHeight = 800;
+
+float originalGraphWidth = originalWidth - xOffset;
+float originalGraphHeight = 800;
+float scaleFactor;
+
+int w;
+int h;
+
+boolean firstRun = true;
+
 java.awt.Insets insets;
 
 void getScaledResolution() {
-  
+  // check if the display can fit the original window size
+  // multiply by because the mac's dock can interfere with window
+  scaleFactor = 1;
+  if (displayWidth < originalWidth || displayHeight * 0.8 < originalHeight) {
+    // find a working scale factor
+    for (float i = 1.0; i > 0; i -= 0.1) {
+      if (originalWidth * i < displayWidth && originalHeight * i < displayHeight * 0.8) {
+        scaleFactor = i;
+        break;
+      }
+    }
+  }
+  println(scaleFactor);
 }
 
 void setup() {
-  size(1000, 800); // set window size to 1000px width 800px height
+  getScaledResolution();
+  w = (int) Math.floor(originalWidth * scaleFactor);
+  h = (int) Math.floor(originalHeight * scaleFactor);
+  //size(1000, 800);
+  //frame.pack();     //frame.pack() ... plus insets
+  //insets = frame.getInsets();
+  //size(1000, 800, P3D);
   
-  frame.pack();     //frame.pack() ... plus insets
-  insets = frame.getInsets();
-  surface.setResizable(true);
-  
-  background(255); //background color will be white and then layered on top of
+   //background color will be white and then layered on top of
   //smooth();
   gui = new ControlP5(this);
-  setupWindow();
+  //surface.setResizable(true);
+  //gui.setAutoDraw(false);
+  background(255);
+  //setupWindow();
+  //gui.setAutoDraw(true);
+  surface.setSize(w, h);
 }
 
 void draw() {
-  //gui.setAutoDraw(false);
+  if (firstRun) {
+    setupWindow();
+    firstRun = false;
+  }
   fill(255);
   textSize(12);
-  text("Press R to perform an approximation", 5, 720);
-  text("A = " + answer, 10, 760);
+  text("Press R to perform an approximation", 5, 720 * scaleFactor);
+  text("A = " + answer, 10, 760 * scaleFactor);
   text("Press C to start over", 5, 790);
+  println("in loop");
   //gui.setAutoDraw(true);
 }
 
