@@ -256,6 +256,9 @@ void clearFields() {
 }
 
 void keyTyped() {
+  if (key == 'b') {
+    checkbox.deactivateAll();
+  }
   if ((key == 'c' || key == 'C') && graph != null) {
     graph.clearView();
     clearFields();
@@ -279,6 +282,8 @@ void keyTyped() {
     for (int i = 0; i < checkBoxTitles.length; i++) {
       if (checkbox.getState(i)) {
         checkedBox = i;
+        print(i + ": ");
+        println(checkbox.getState(i));
         break;
       }
     }
