@@ -1,6 +1,11 @@
 import org.quark.jasmine.*; // Library for Processing Mathematic functions
 import controlP5.*;
 
+// To Round Values
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+
 ControlP5 gui; // create gui library object
 CheckBox checkbox;
 Button submit; // button that will start the graphing when pressed
@@ -62,6 +67,8 @@ String ins = "Press R to perform an approximation";
 int eMsgFontSize = 9;
 int insFontSize = 12;
 
+DecimalFormat df = new DecimalFormat("#.#####"); // round Riemann sum Vals to 5 decimal points
+
 void getScaledResolution() {
   // check if the display can fit the original window size
   // multiply by because the mac's dock can interfere with window
@@ -113,6 +120,7 @@ void setup() {
   //size(1000, 800);
   surface.setSize(w, h);
   gui = new ControlP5(this);
+  df.setRoundingMode(RoundingMode.CEILING);
   noSmooth();
   background(255);
 }
@@ -127,7 +135,7 @@ void draw() {
   text("Press R to perform an approximation", 5 * scaleFactor, 720 * scaleFactor);
   text("Press C to start over", 5 * scaleFactor, 790);
   textSize(12);
-  text("A = " + answer, 5 * scaleFactor, 760 * scaleFactor);
+  text("A = " + df.format(answer), 5 * scaleFactor, 760 * scaleFactor);
 }
 
 void setupWindow() { // lays out the UI of the calculator
