@@ -20,7 +20,7 @@ class Approximation { // class for calculating and drawing different types of Re
   }
   
   private boolean approxEqual(float a, float b) {
-    return abs(a - b) <= 0.001;
+    return abs(a - b) <= 0.0001;
   }
   
   float leftEndPoint() {

@@ -53,7 +53,14 @@ int h;
 
 boolean firstRun = true;
 
-java.awt.Insets insets;
+int originalEMsgSize = 9;
+String inputEMsg = "Please Check One Box and complete all fields";
+
+int originalInsSize = 12;
+String ins = "Press R to perform an approximation";
+
+int eMsgFontSize;
+int insFontSize;
 
 void getScaledResolution() {
   // check if the display can fit the original window size
@@ -69,24 +76,41 @@ void getScaledResolution() {
     }
   }
   xOffset = xOffset * scaleFactor;
-  println(scaleFactor);
+  println("Scale Factor: " + scaleFactor);
+  // find find font size for different text on the sideBar
+  
+  // start with Error msg size
+  textSize(originalEMsgSize);
+  if (textWidth(inputEMsg) > xOffset) {
+    for (int i = originalEMsgSize; i > 0; i--) {
+      textSize(i);
+      if (textWidth(inputEMsg) < xOffset) {
+        eMsgFontSize = i;
+        break;
+      }
+    }
+  }
+  println("Error Message Scaled Font Size: " + eMsgFontSize);
+  
+  // find scaled instruction font size
+  textSize(originalInsSize);
+  if (textWidth(ins) > xOffset) {
+    for (int i = originalInsSize; i > 0; i--) {
+      textSize(i);
+      if (textWidth(ins) < xOffset) {
+        insFontSize = i;
+        break;
+      }
+    }
+  }
+  println("Scaled Instruction Font Size: " + insFontSize);
 }
 
 void setup() {
   getScaledResolution();
   w = (int) Math.floor(originalWidth * scaleFactor);
   h = (int) Math.floor(originalHeight * scaleFactor);
-  //size(1000, 800);
-  //frame.pack();     //frame.pack() ... plus insets
-  //insets = frame.getInsets();
-  //size(1000, 800, P3D);
-  
-   //background color will be white and then layered on top of
-  //smooth();
-  //surface.setResizable(true);
-  //gui.setAutoDraw(false);
   background(255);
-  //setupWindow();
   surface.setSize(w, h);
   gui = new ControlP5(this);
 }
@@ -97,12 +121,10 @@ void draw() {
     firstRun = false;
   }
   fill(255);
-  textSize(12);
-  text("Press R to perform an approximation", 5, 720 * scaleFactor);
-  text("A = " + answer, 10, 760 * scaleFactor);
-  text("Press C to start over", 5, 790);
-  //println("in loop");
-  //gui.setAutoDraw(true);
+  textSize(insFontSize);
+  text("Press R to perform an approximation", 5 * scaleFactor, 720 * scaleFactor);
+  text("A = " + answer, 5 * scaleFactor, 760 * scaleFactor);
+  text("Press C to start over", 5 * scaleFactor, 790);
 }
 
 void setupWindow() { // lays out the UI of the calculator
@@ -189,7 +211,7 @@ void handleSubmit() {
   }
   if (!validateFields() || boxesChecked != 1) {
     fill(255);
-    textSize(9);
+    textSize(eMsgFontSize);
     text("Please Check One Box and complete all fields", 10 * scaleFactor, 610 * scaleFactor);
   } else {
     /* go forward with graphing here*/
