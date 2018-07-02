@@ -59,8 +59,8 @@ String inputEMsg = "Please Check One Box and complete all fields";
 int originalInsSize = 12;
 String ins = "Press R to perform an approximation";
 
-int eMsgFontSize;
-int insFontSize;
+int eMsgFontSize = 9;
+int insFontSize = 12;
 
 void getScaledResolution() {
   // check if the display can fit the original window size
@@ -110,9 +110,11 @@ void setup() {
   getScaledResolution();
   w = (int) Math.floor(originalWidth * scaleFactor);
   h = (int) Math.floor(originalHeight * scaleFactor);
-  background(255);
+  //size(1000, 800);
   surface.setSize(w, h);
   gui = new ControlP5(this);
+  noSmooth();
+  background(255);
 }
 
 void draw() {
@@ -123,8 +125,9 @@ void draw() {
   fill(255);
   textSize(insFontSize);
   text("Press R to perform an approximation", 5 * scaleFactor, 720 * scaleFactor);
-  text("A = " + answer, 5 * scaleFactor, 760 * scaleFactor);
   text("Press C to start over", 5 * scaleFactor, 790);
+  textSize(12);
+  text("A = " + answer, 5 * scaleFactor, 760 * scaleFactor);
 }
 
 void setupWindow() { // lays out the UI of the calculator
