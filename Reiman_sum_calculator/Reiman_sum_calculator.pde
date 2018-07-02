@@ -81,10 +81,10 @@ void getScaledResolution() {
   
   // start with Error msg size
   textSize(originalEMsgSize);
-  if (textWidth(inputEMsg) > xOffset) {
+  if (textWidth(inputEMsg) > xOffset - 5 * scaleFactor) {
     for (int i = originalEMsgSize; i > 0; i--) {
       textSize(i);
-      if (textWidth(inputEMsg) < xOffset) {
+      if (textWidth(inputEMsg) < xOffset - 5 * scaleFactor) {
         eMsgFontSize = i;
         break;
       }
@@ -94,10 +94,10 @@ void getScaledResolution() {
   
   // find scaled instruction font size
   textSize(originalInsSize);
-  if (textWidth(ins) > xOffset) {
+  if (textWidth(ins) > xOffset - 5 * scaleFactor) {
     for (int i = originalInsSize; i > 0; i--) {
       textSize(i);
-      if (textWidth(ins) < xOffset) {
+      if (textWidth(ins) < xOffset - 5 * scaleFactor) {
         insFontSize = i;
         break;
       }
