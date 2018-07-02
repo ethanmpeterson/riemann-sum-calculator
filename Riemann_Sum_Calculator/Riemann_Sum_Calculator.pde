@@ -70,6 +70,10 @@ int insFontSize = 12;
 
 DecimalFormat df = new DecimalFormat("#.#####"); // round Riemann sum Vals to 5 decimal points
 
+boolean[] prevCheckStates = new boolean[4];
+boolean[] currentCheckStates = new boolean[4];
+int newBox = 0; // index of the newly checked box
+
 void getScaledResolution() {
   // check if the display can fit the original window size
   // multiply by because the mac's dock can interfere with window
@@ -138,6 +142,10 @@ void draw() {
   text("Press C to start over", 5 * scaleFactor, 790);
   textSize(12);
   text("A = " + df.format(answer), 5 * scaleFactor, 760 * scaleFactor);
+  
+  for (int i = 0; i < checkBoxTitles.length; i++) { // catalog which boxes are checked
+    prevCheckStates[i] = checkbox.getState(i);
+  }
 }
 
 void setupWindow() { // lays out the UI of the calculator
@@ -172,6 +180,22 @@ void setupWindow() { // lays out the UI of the calculator
 void controlEvent(ControlEvent theEvent) { // Handle GUI Events
   if (theEvent.isFrom(submit)) { // check if button was pressed
     handleSubmit();
+  }
+  //int newBox = 0; // index of the newly checked box
+  if (theEvent.isFrom(checkbox)) { // ensure only one check box is checked at a time
+    for (int i = 0; i < checkbox.getArrayValue().length; i++) {
+      currentCheckStates[i] = checkbox.getState(i);
+      if (currentCheckStates[i] && !prevCheckStates[i]) {
+        newBox = i;
+        println(newBox);
+        break;
+      }
+    }
+    for (int i = 0; i < checkbox.getArrayValue().length; i++) {
+      if (i != newBox) {
+        checkbox.deactivate(i);
+      }
+    }
   }
 }
 
@@ -256,9 +280,6 @@ void clearFields() {
 }
 
 void keyTyped() {
-  if (key == 'b') {
-    checkbox.deactivateAll();
-  }
   if ((key == 'c' || key == 'C') && graph != null) {
     graph.clearView();
     clearFields();
