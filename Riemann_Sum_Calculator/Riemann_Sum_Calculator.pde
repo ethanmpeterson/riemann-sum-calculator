@@ -74,6 +74,8 @@ boolean[] prevCheckStates = new boolean[4];
 boolean[] currentCheckStates = new boolean[4];
 int newBox = 0; // index of the newly checked box
 
+boolean boxChecked;
+
 void getScaledResolution() {
   // check if the display can fit the original window size
   // multiply by because the mac's dock can interfere with window
@@ -145,6 +147,9 @@ void draw() {
   
   for (int i = 0; i < checkBoxTitles.length; i++) { // catalog which boxes are checked
     prevCheckStates[i] = checkbox.getState(i);
+    if (i != newBox && boxChecked) {
+      checkbox.deactivate(i);
+    }
   }
 }
 
@@ -185,17 +190,23 @@ void controlEvent(ControlEvent theEvent) { // Handle GUI Events
   if (theEvent.isFrom(checkbox)) { // ensure only one check box is checked at a time
     for (int i = 0; i < checkbox.getArrayValue().length; i++) {
       currentCheckStates[i] = checkbox.getState(i);
+      boxChecked = false;
       if (currentCheckStates[i] && !prevCheckStates[i]) {
+        boxChecked = true;
         newBox = i;
+        //gui.setAutoDraw(false);
+        //checkbox.deactivateAll();
+        //checkbox.activate(i);
+        //gui.setAutoDraw(true);
         println(newBox);
         break;
       }
     }
-    for (int i = 0; i < checkbox.getArrayValue().length; i++) {
-      if (i != newBox) {
-        checkbox.deactivate(i);
-      }
-    }
+    //for (int i = 0; i < checkbox.getArrayValue().length; i++) {
+    //  if (i != newBox && boxChecked) {
+    //    checkbox.deactivate(i);
+    //  }
+    //}
   }
 }
 
