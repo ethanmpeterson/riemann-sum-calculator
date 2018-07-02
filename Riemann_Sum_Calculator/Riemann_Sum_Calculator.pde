@@ -1,6 +1,7 @@
 import org.quark.jasmine.*; // Library for Processing Mathematic functions
 import controlP5.*;
 
+
 // To Round Values
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -121,6 +122,7 @@ void setup() {
   surface.setSize(w, h);
   gui = new ControlP5(this);
   df.setRoundingMode(RoundingMode.CEILING);
+  surface.setTitle("Riemann Sum Calculator");
   noSmooth();
   background(255);
 }
