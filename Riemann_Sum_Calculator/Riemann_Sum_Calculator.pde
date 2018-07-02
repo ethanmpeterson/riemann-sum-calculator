@@ -277,8 +277,7 @@ void keyTyped() {
     popMatrix();
     gui.setAutoDraw(true);
     
-    // find checked box and run corresponding Reimann Sum (All working with exception of trapezoid)
-
+    // find checked box and run corresponding Reimann Sum
     for (int i = 0; i < checkBoxTitles.length; i++) {
       if (checkbox.getState(i)) {
         checkedBox = i;
