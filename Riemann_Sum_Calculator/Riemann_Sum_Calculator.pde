@@ -121,6 +121,13 @@ void getScaledResolution() {
 }
 
 void setup() {
+  size(400,400);
+  fill(255);
+  rect(0,0,width,height);
+  textSize(24);
+  fill(0);
+  text("E. Peterson", 50,50);
+  delay(1000);
   getScaledResolution();
   w = (int) Math.floor(originalWidth * scaleFactor);
   h = (int) Math.floor(originalHeight * scaleFactor);
