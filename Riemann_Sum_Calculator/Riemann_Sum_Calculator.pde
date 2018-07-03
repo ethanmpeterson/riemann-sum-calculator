@@ -76,6 +76,9 @@ int newBox = 0; // index of the newly checked box
 
 boolean boxChecked;
 
+// Splash Screen Image
+PImage splashScreen;
+
 void getScaledResolution() {
   // check if the display can fit the original window size
   // multiply by because the mac's dock can interfere with window
@@ -121,17 +124,17 @@ void getScaledResolution() {
 }
 
 void setup() {
-  size(400,400);
-  fill(255);
+  size(512, 512);
+  splashScreen = loadImage("splash-screen.png");
   rect(0,0,width,height);
-  textSize(24);
-  fill(0);
-  text("E. Peterson", 50,50);
-  delay(1000);
+  //while(splashScreen.width == 0);
+  image(splashScreen,0,0);
+  //delay(3000);
   getScaledResolution();
   w = (int) Math.floor(originalWidth * scaleFactor);
   h = (int) Math.floor(originalHeight * scaleFactor);
   //size(1000, 800);
+  delay(4000);
   surface.setSize(w, h);
   gui = new ControlP5(this);
   df.setRoundingMode(RoundingMode.CEILING);
