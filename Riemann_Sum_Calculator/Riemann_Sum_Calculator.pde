@@ -76,6 +76,8 @@ int newBox = 0; // index of the newly checked box
 
 boolean boxChecked;
 
+int currentBox = 0;
+
 // Splash Screen Image
 //PImage splashScreen;
 
@@ -147,7 +149,6 @@ void drawSplashScreen() {
   line(512 / 4 + 30, 350, 512 / 2.5 + 30, 350);
   line(512 / 4 + 30, 450, 512 / 2.5 + 30, 450);
   line(512 / 4 + 30, 400, 512 / 2.5 + 30, 400);
-  //line()
   line(512 / 2.5 + 30, 350, 512 / 2.5 + 30, 450);
   
 }
@@ -179,6 +180,8 @@ void draw() {
   text("Press C to start over", 5 * scaleFactor, 790);
   textSize(12);
   text("A = " + df.format(answer), 5 * scaleFactor, 760 * scaleFactor);
+  
+  textFieldSelectUpdate();
   
   for (int i = 0; i < checkBoxTitles.length; i++) { // catalog which boxes are checked
     prevCheckStates[i] = checkbox.getState(i);
@@ -217,6 +220,26 @@ void setupWindow() { // lays out the UI of the calculator
      .setSize((int) Math.floor(150 * s), (int) Math.floor(75 * s));
 }
 
+void textFieldSelectUpdate() { // updates which text field is editing when the user presses tab
+  switch (currentBox) {
+    case 1:
+      functionInput.setFocus(true);
+      break;
+    case 2:
+      xViewingWindow.setFocus(true);
+      break;
+    case 3:
+      yViewingWindow.setFocus(true);
+      break;
+    case 4:
+      functionInterval.setFocus(true);
+      break;
+    case 5:
+      subIntervals.setFocus(true);
+      break;
+  }
+}
+
 void controlEvent(ControlEvent theEvent) { // Handle GUI Events
   if (theEvent.isFrom(submit)) { // check if button was pressed
     handleSubmit();
@@ -229,19 +252,10 @@ void controlEvent(ControlEvent theEvent) { // Handle GUI Events
       if (currentCheckStates[i] && !prevCheckStates[i]) {
         boxChecked = true;
         newBox = i;
-        //gui.setAutoDraw(false);
-        //checkbox.deactivateAll();
-        //checkbox.activate(i);
-        //gui.setAutoDraw(true);
         println(newBox);
         break;
       }
     }
-    //for (int i = 0; i < checkbox.getArrayValue().length; i++) {
-    //  if (i != newBox && boxChecked) {
-    //    checkbox.deactivate(i);
-    //  }
-    //}
   }
 }
 
@@ -325,6 +339,14 @@ void clearFields() {
   subIntervals.clear();
 }
 
+void disableTextFields() { // set focus false on all input fields
+  functionInput.setFocus(false);
+  xViewingWindow.setFocus(false);
+  yViewingWindow.setFocus(false);
+  functionInterval.setFocus(false);
+  subIntervals.setFocus(false);
+}
+
 void keyTyped() {
   if ((key == 'c' || key == 'C') && graph != null) {
     graph.clearView();
@@ -366,4 +388,16 @@ void keyTyped() {
     }
     checkedBox = 0;
   }
+  if (key == TAB) { // Check if tab key was pressed
+    currentBox++;
+    disableTextFields();
+    println(currentBox);
+    if (currentBox == 6) {
+      currentBox = 1;
+    }
+  }
+}
+
+void mouseClicked() {
+  currentBox = 0;
 }

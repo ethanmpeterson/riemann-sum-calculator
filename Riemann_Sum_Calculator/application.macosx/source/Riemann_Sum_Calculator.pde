@@ -147,7 +147,6 @@ void drawSplashScreen() {
   line(512 / 4 + 30, 350, 512 / 2.5 + 30, 350);
   line(512 / 4 + 30, 450, 512 / 2.5 + 30, 450);
   line(512 / 4 + 30, 400, 512 / 2.5 + 30, 400);
-  //line()
   line(512 / 2.5 + 30, 350, 512 / 2.5 + 30, 450);
   
 }
@@ -237,11 +236,6 @@ void controlEvent(ControlEvent theEvent) { // Handle GUI Events
         break;
       }
     }
-    //for (int i = 0; i < checkbox.getArrayValue().length; i++) {
-    //  if (i != newBox && boxChecked) {
-    //    checkbox.deactivate(i);
-    //  }
-    //}
   }
 }
 
