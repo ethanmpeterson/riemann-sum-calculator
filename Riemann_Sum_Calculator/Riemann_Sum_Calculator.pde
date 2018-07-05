@@ -77,7 +77,7 @@ int newBox = 0; // index of the newly checked box
 boolean boxChecked;
 
 // Splash Screen Image
-PImage splashScreen;
+//PImage splashScreen;
 
 void getScaledResolution() {
   // check if the display can fit the original window size
@@ -125,10 +125,10 @@ void getScaledResolution() {
 
 void setup() {
   size(512, 512);
-  splashScreen = loadImage("splash-screen.png");
+  //splashScreen = loadImage("splash-screen.png");
   rect(0,0,width,height);
   //while(splashScreen.width == 0);
-  image(splashScreen,0,0);
+  //image(splashScreen,0,0);
   //delay(3000);
   getScaledResolution();
   w = (int) Math.floor(originalWidth * scaleFactor);
