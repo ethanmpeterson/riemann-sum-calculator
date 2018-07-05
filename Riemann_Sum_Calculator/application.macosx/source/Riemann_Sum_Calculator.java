@@ -144,18 +144,43 @@ public void getScaledResolution() {
   println("Scaled Instruction Font Size: " + insFontSize);
 }
 
+public void drawSplashScreen() {
+  noStroke();
+  rect(0, 0, width, height);
+  stroke(3);
+  //strokeWeight(1);
+  // Draw E
+  line(512 / 4, 100, 512 / 4, 300);
+  line(512 / 4, 200, 512 / 2.5f, 200);
+  line(512 / 4, 300, 512 / 2.5f, 300);
+  line(512 / 4, 100, 512 / 2.5f, 100);
+  
+  // Draw P
+  line(512 / 2, 100, 512 / 2, 300);
+  line(512 / 2, 100, 512 / 1.5f, 100);
+  line(512 / 2, 200, 512 / 1.5f, 200);
+  line(512 / 1.5f, 100, 512 / 1.5f, 200);
+  
+  // Draw '18
+  line (512 / 4, 350, 512 / 4, 360);
+  line(512 / 4 + 15, 350, 512 / 4 + 15, 450);
+  line(512 / 4 + 30, 350, 512 / 4 + 30, 450);
+  line(512 / 4 + 30, 350, 512 / 2.5f + 30, 350);
+  line(512 / 4 + 30, 450, 512 / 2.5f + 30, 450);
+  line(512 / 4 + 30, 400, 512 / 2.5f + 30, 400);
+  //line()
+  line(512 / 2.5f + 30, 350, 512 / 2.5f + 30, 450);
+  
+}
+
 public void setup() {
   
-  //splashScreen = loadImage("splash-screen.png");
-  rect(0,0,width,height);
-  //while(splashScreen.width == 0);
-  //image(splashScreen,0,0);
-  //delay(3000);
+  drawSplashScreen();
   getScaledResolution();
   w = (int) Math.floor(originalWidth * scaleFactor);
   h = (int) Math.floor(originalHeight * scaleFactor);
   //size(1000, 800);
-  delay(4000);
+  //delay(4000);
   surface.setSize(w, h);
   gui = new ControlP5(this);
   df.setRoundingMode(RoundingMode.CEILING);
